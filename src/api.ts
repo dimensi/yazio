@@ -1,4 +1,7 @@
-export { getTokenFromCredentials } from "@/api/oauth/token";
+export {
+  getTokenFromCredentials,
+  getTokenFromRefreshToken,
+} from "@/api/oauth/token";
 
 export { getProduct } from "@/api/products";
 export { searchProducts } from "@/api/products/search";
