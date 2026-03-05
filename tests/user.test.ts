@@ -138,6 +138,13 @@ describe("user", () => {
       const parsed = RecipeSchema.safeParse(result);
       expect(parsed.success).toBe(true);
     });
+
+    test("getRecipeIds returns valid array of UUIDs", async () => {
+      const yazio = createYazio();
+      const result: string[] = await yazio.user.getRecipeIds();
+      const parsed = z.array(z.string().uuid()).safeParse(result);
+      expect(parsed.success).toBe(true);
+    });
   });
 
   describe("consumed items", () => {

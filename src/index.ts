@@ -15,6 +15,7 @@ import {
   getUserWaterIntake,
   getUserWeight,
   getRecipe,
+  getUserRecipeIds,
   deleteUserRecipe,
   searchProducts,
   getUserDailySummary,
@@ -87,6 +88,9 @@ class User {
 
   public getRecipe = async (id: Parameters<typeof getRecipe>[1]) =>
     getRecipe(await this.auth.authenticate(), id);
+
+  public getRecipeIds = async () =>
+    getUserRecipeIds(await this.auth.authenticate());
 
   public deleteRecipe = async (id: Parameters<typeof deleteUserRecipe>[1]) =>
     deleteUserRecipe(await this.auth.authenticate(), id);

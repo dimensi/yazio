@@ -20,5 +20,9 @@ export { getUserGoals } from "@/api/user/goals";
 export { getUserSettings } from "@/api/user/settings";
 export { getUserDailySummary } from "@/api/user/summary";
 export { getUserWaterIntake } from "@/api/user/water";
-export { getRecipe, deleteUserRecipe } from "@/api/user/recipes";
+export {
+  getRecipe,
+  getUserRecipeIds,
+  deleteUserRecipe,
+} from "@/api/user/recipes";
 export { getUser } from "@/api/user";

@@ -22,8 +22,8 @@ export const RecipeSchema = z.object({
   name: z.string(),
   portion_count: z.number(),
   nutrients: z.record(z.string(), z.number()),
-  image: z.unknown(),
-  instructions: z.array(z.any()),
+  image: z.string().nullable(),
+  instructions: z.array(z.string()),
   is_yazio_recipe: z.boolean(),
   available_since: z.string().nullable(),
   is_pro_recipe: z.boolean(),
@@ -31,6 +31,24 @@ export const RecipeSchema = z.object({
 });
 
 export type Recipe = z.infer<typeof RecipeSchema>;
+
+/**
+ * Get the list of recipe IDs belonging to the user (no details).
+ * Use getRecipe(id) for each id to fetch full recipe data.
+ *
+ * @param token - The token to use for authentication.
+ *
+ * @returns - Promise resolving to an array of recipe UUIDs.
+ */
+export const getUserRecipeIds = async (
+  token: Token
+): Promise<string[]> =>
+  fetchYazio<string[]>(`/user/recipes`, {
+    headers: {
+      Authorization: `Bearer ${token.access_token}`,
+      Accept: "application/json",
+    },
+  });
 
 /**
  * Get a recipe by id.
