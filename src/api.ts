@@ -26,3 +26,5 @@ export {
   deleteUserRecipe,
 } from "@/api/user/recipes";
 export { getUser } from "@/api/user";
+export { getUserMealImages, UserMealImagesSchema, GetUserMealImagesOptionsSchema } from "@/api/user/meal-images";
+export type { UserMealImages, GetUserMealImagesOptions } from "@/api/user/meal-images";

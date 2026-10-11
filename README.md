@@ -63,3 +63,27 @@ const summary = await yazio.user.getSummary({ date: new Date(/* ... */) });
 ```
 
 See source code docs in `src/index.ts` for detailed usage. Documentation following shortly.
+
+### Diary photos
+
+```ts
+import type { UserMealImages } from "yazio/api";
+
+const photos: UserMealImages = await yazio.user.getMealImages({ date: "2026-10-09" });
+// photos.lunch / photos.dinner are optional URLs. A day without photos returns {}.
+```
+
+`date` accepts a string or Date and defaults to today. Photos belong to a day
+and meal slot, not an individual consumed item. The API returns one URL per
+slot, including photos from meals with AI entries. AI entries do not always
+have a photo. URLs are CDN images; original camera files and permanent URL
+availability are not guaranteed.
+
+The client sends a recognized mobile User-Agent to avoid `version_blocked`.
+OAuth login/refresh uses v22 and the current mobile OAuth client configuration;
+other requests continue using v20. Existing tokens are reused until expiry.
+If a legacy refresh token is rejected, supply credentials to allow login fallback.
+The accepted app version may need updating when YAZIO retires it.
+
+These headers were verified in Bun; browsers may control the User-Agent header,
+so direct browser calls are not validated. Credentials belong on the server.

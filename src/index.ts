@@ -7,6 +7,7 @@ import {
   getProduct,
   getUser,
   getUserConsumedItems,
+  getUserMealImages,
   getUserDietaryPreferences,
   getUserExercises,
   getUserGoals,
@@ -77,6 +78,10 @@ class User {
   public getConsumedItems = async (
     options?: Parameters<typeof getUserConsumedItems>[1]
   ) => getUserConsumedItems(await this.auth.authenticate(), options);
+
+  public getMealImages = async (
+    options?: Parameters<typeof getUserMealImages>[1]
+  ) => getUserMealImages(await this.auth.authenticate(), options);
 
   public addConsumedItem = async (
     options: Parameters<typeof addUserConsumedItem>[1]

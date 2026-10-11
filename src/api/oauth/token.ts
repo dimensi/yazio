@@ -1,5 +1,5 @@
 import type { Credentials, Token } from "@/types/auth";
-import { YAZIO_CLIENT_ID, YAZIO_CLIENT_SECRET } from "@/utils/constants";
+import { YAZIO_CLIENT_ID, YAZIO_CLIENT_SECRET, YAZIO_OAUTH_URL } from "@/utils/constants";
 import { fetchYazio } from "@/utils/fetch";
 
 /**
@@ -21,8 +21,9 @@ export const getTokenFromCredentials = async (
       "Incomplete or missing credentials provided. Either `username` or `password` are missing."
     );
 
-  const token = await fetchYazio<Token>(`/oauth/token`, {
+  const token = await fetchYazio<Token>(YAZIO_OAUTH_URL, {
     method: "POST",
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       client_id: YAZIO_CLIENT_ID,
       client_secret: YAZIO_CLIENT_SECRET,
@@ -54,8 +55,9 @@ export const getTokenFromRefreshToken = async (
 
   const token = await fetchYazio<
     Pick<Token, "token_type" | "access_token" | "refresh_token" | "expires_in">
-  >(`/oauth/token`, {
+  >(YAZIO_OAUTH_URL, {
     method: "POST",
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       client_id: YAZIO_CLIENT_ID,
       client_secret: YAZIO_CLIENT_SECRET,
