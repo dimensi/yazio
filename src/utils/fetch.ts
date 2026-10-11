@@ -1,4 +1,4 @@
-import { YAZIO_BASE_URL } from "@/utils/constants";
+import { YAZIO_BASE_URL, YAZIO_USER_AGENT } from "@/utils/constants";
 
 /**
  * Utility function to automatically fetch from the given base URL. If an
@@ -12,12 +12,14 @@ import { YAZIO_BASE_URL } from "@/utils/constants";
 export const fetchYazio = <T>(
   input: Parameters<typeof fetch>[0],
   init: Parameters<typeof fetch>[1]
-) =>
-  fetch(
+) => {
+  const headers = new Headers(init?.headers);
+  if (!headers.has("User-Agent")) headers.set("User-Agent", YAZIO_USER_AGENT);
+  return fetch(
     typeof input === "string" && !input.startsWith("http")
       ? `${YAZIO_BASE_URL}${input}`
       : input,
-    init
+    { ...init, headers }
   ).then((res) => {
     if (!res.ok)
       throw new Error(
@@ -28,3 +30,4 @@ export const fetchYazio = <T>(
 
     return res.json() as Promise<T>;
   });
+};
