@@ -1,6 +1,6 @@
 import type { Token } from "@/types/auth";
 import { DaytimeSchema } from "@/types/yazio";
-import { parseDate } from "@/utils/date";
+import { parseDate, parseDiaryDateTime } from "@/utils/date";
 import { fetchYazio } from "@/utils/fetch";
 import { z } from "zod";
 
@@ -84,7 +84,7 @@ const AddUserConsumedItemsOptionsSchema = z.union([
   z.object({
     id: z.string().uuid(),
     product_id: z.string().uuid(),
-    date: z.union([z.date(), z.string()]),
+    date: z.string(),
     daytime: DaytimeSchema,
     amount: z.number(),
     serving: z.string(),
@@ -93,7 +93,7 @@ const AddUserConsumedItemsOptionsSchema = z.union([
   z.object({
     id: z.string().uuid(),
     product_id: z.string().uuid(),
-    date: z.union([z.date(), z.string()]),
+    date: z.string(),
     daytime: DaytimeSchema,
     amount: z.number(),
     serving: z.null(),
@@ -126,7 +126,7 @@ export const addUserConsumedItem = async (
         {
           id: entry.id,
           product_id: entry.product_id,
-          date: parseDate(entry.date ?? new Date()),
+          date: parseDiaryDateTime(entry.date),
           daytime: entry.daytime,
           amount: entry.amount,
           serving: entry.serving,
