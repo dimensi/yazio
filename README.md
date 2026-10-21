@@ -11,11 +11,11 @@ Built to enable personal dashboards and calendar integrations for calorie tracki
 ### Installing
 
 ```bash
-bun add yazio
+bun add @dimensi/yazio
 ```
 
 ```
-npm install yazio
+npm install @dimensi/yazio
 ```
 
 ### Usage
@@ -25,7 +25,7 @@ Here's a quick example of how to use `yazio` in your project:
 ```ts
 // Basic Usage
 
-import { Yazio } from "yazio";
+import { Yazio } from "@dimensi/yazio";
 
 const yazio = new Yazio({
   credentials: {
@@ -40,7 +40,7 @@ const items = await getConsumedItems({ date: new Date(/* ... */) });
 ```ts
 // Advanced Usage
 
-import { Yazio } from "yazio";
+import { Yazio } from "@dimensi/yazio";
 import { kv } from "@vercel/kv";
 
 const yazio = new Yazio({
@@ -67,7 +67,7 @@ See source code docs in `src/index.ts` for detailed usage. Documentation followi
 ### Diary photos
 
 ```ts
-import type { UserMealImages } from "yazio/api";
+import type { UserMealImages } from "@dimensi/yazio/api";
 
 const photos: UserMealImages = await yazio.user.getMealImages({ date: "2026-10-09" });
 // photos.lunch / photos.dinner are optional URLs. A day without photos returns {}.
@@ -87,3 +87,19 @@ The accepted app version may need updating when YAZIO retires it.
 
 These headers were verified in Bun; browsers may control the User-Agent header,
 so direct browser calls are not validated. Credentials belong on the server.
+
+### Recording food (v2)
+
+`addConsumedItem` requires an explicit local diary timestamp in
+`YYYY-MM-DD HH:mm:ss` format, for example `2026-10-22 00:30:45`.
+It preserves these calendar fields exactly, like the Android app. Choose the
+user's local date and time before calling; do not pass a JavaScript `Date`,
+an ISO timestamp with an offset, or a date without time. Invalid calendar dates
+are rejected before sending a request. Day-level read methods still use
+`YYYY-MM-DD` and keep their existing input contract.
+
+This is a breaking change from v1, which discarded the time and could move
+entries to another day during UTC conversion.
+
+Release archives are available in GitHub Releases. Until npm publication is
+available, install the immutable `dimensi-yazio-2.0.0.tgz` release asset.

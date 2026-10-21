@@ -154,7 +154,7 @@ describe("user", () => {
       await yazio.user.addConsumedItem({
         id: entryId,
         product_id: "9e219ae8-becf-11e6-b9dc-e0071b8a8723",
-        date: new Date(),
+        date: new Date().toLocaleString("sv-SE"),
         daytime: "breakfast",
         amount: 100,
         serving: null,
@@ -169,7 +169,7 @@ describe("user", () => {
       await yazio.user.addConsumedItem({
         id: entryId,
         product_id: "9e219ae8-becf-11e6-b9dc-e0071b8a8723",
-        date: new Date(),
+        date: new Date().toLocaleString("sv-SE"),
         daytime: "breakfast",
         amount: 80,
         serving: "roll",
@@ -184,7 +184,7 @@ describe("user", () => {
       await yazio.user.addConsumedItem({
         id: entryId,
         product_id: "9e219ae8-becf-11e6-b9dc-e0071b8a8723",
-        date: new Date(),
+        date: new Date().toLocaleString("sv-SE"),
         daytime: "breakfast",
         amount: 160,
         serving: "roll",
